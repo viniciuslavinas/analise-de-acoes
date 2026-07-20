@@ -24,5 +24,31 @@
     "peer_ev_ebitda": 6.0,
     "peer_ev_ebit": 11.0,
     "peer_peg": 1.0
+  },
+  {
+    "ticker": "PETR4",
+    "name": "Petróleo Brasileiro S.A. - Petrobras",
+    "sector": "Energy",
+    "price": 41.3,
+    "shares_millions": 5446.501379,
+    "revenue_millions": 488717.244,
+    "ebit_margin": 0.3463310723695275,
+    "tax_rate": 0.34,
+    "depreciation_millions": 82993.4424,
+    "capex_millions": 106959.4632,
+    "working_capital_change_millions": -24415.3152,
+    "net_debt_millions": 332017.6032,
+    "book_value_millions": 414035.748,
+    "net_income_millions": 107578.6128,
+    "dividends_per_share": 2.991,
+    "revenue_growth": 0.004,
+    "terminal_growth": 0.04,
+    "wacc": 0.12,
+    "cost_of_equity": 0.15,
+    "peer_pe": 7.0,
+    "peer_pb": 1.3,
+    "peer_ev_ebitda": 4.5,
+    "peer_ev_ebit": 8.0,
+    "peer_peg": 0.9
   }
 ]
