@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}
+<section class="hero"><p class="eyebrow">FUNDAMENTOS · B3</p><h1>Veja o preço.<br><em>Entenda o valor.</em></h1><p>Valuation transparente por DCF, dividendos e múltiplos — sem caixa-preta.</p></section>
+<section class="summary"><div><small>Ações monitoradas</small><strong>{{ items|length }}</strong></div><div><small>Atualização de preços</small><strong>Diária</strong></div><div><small>Moeda</small><strong>BRL</strong></div></section>
+<section><div class="section-title"><h2>Radar de oportunidades</h2><span>Valor de referência = média dos métodos aplicáveis</span></div>
+<div class="table-wrap"><table><thead><tr><th>Empresa</th><th>Preço</th><th>DCF</th><th>Referência</th><th>Margem de segurança</th><th>ROE</th><th></th></tr></thead><tbody>
+{% for item in items %}<tr><td><b>{{ item.ticker }}</b><small>{{ item.name }} · {{ item.sector }}</small></td><td>R$ {{ '%.2f'|format(item.price) }}</td><td>R$ {{ '%.2f'|format(item.dcf.per_share) }}</td><td>R$ {{ '%.2f'|format(item.reference_value) }}</td><td><span class="pill {{ 'positive' if item.safety_margin > 0 else 'negative' }}">{{ '%+.1f'|format(item.safety_margin * 100) }}%</span></td><td>{{ '%.1f'|format(item.quality.roe * 100) }}%</td><td><a class="arrow" href="/acoes/{{ item.ticker }}">→</a></td></tr>{% endfor %}
+</tbody></table></div></section>
+<section id="metodologia" class="method"><h2>Três lentes, uma análise clara.</h2><div class="method-grid"><article><b>01</b><h3>DCF</h3><p>Fluxo de caixa livre projetado e trazido a valor presente por WACC.</p></article><article><b>02</b><h3>DDM</h3><p>Dividendos futuros para negócios com distribuição previsível.</p></article><article><b>03</b><h3>Múltiplos</h3><p>Comparação com pares por lucro, patrimônio e valor da firma.</p></article></div></section>
+{% endblock %}
