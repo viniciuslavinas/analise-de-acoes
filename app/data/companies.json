@@ -1,0 +1,28 @@
+[
+  {
+    "ticker": "CMIG4",
+    "name": "Companhia Energética de Minas Gerais - CEMIG",
+    "sector": "Utilities",
+    "price": 11.03,
+    "shares_millions": 1904.080104,
+    "revenue_millions": 42751.0,
+    "ebit_margin": 0.16778554887604968,
+    "tax_rate": 0.34,
+    "depreciation_millions": 1533.0,
+    "capex_millions": 1078.0,
+    "working_capital_change_millions": -584.0,
+    "net_debt_millions": 15546.0,
+    "book_value_millions": 28576.0,
+    "net_income_millions": 4897.0,
+    "dividends_per_share": 1.228,
+    "revenue_growth": 0.063,
+    "terminal_growth": 0.04,
+    "wacc": 0.12,
+    "cost_of_equity": 0.15,
+    "peer_pe": 10.0,
+    "peer_pb": 1.5,
+    "peer_ev_ebitda": 6.0,
+    "peer_ev_ebit": 11.0,
+    "peer_peg": 1.0
+  }
+]

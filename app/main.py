@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
-from app.data.repository import add_company, get_company, list_companies
+from app.data.repository import add_company, get_company, list_companies, remove_company
 from app.domain import Assumptions, Company
 from app.services.market_data import company_from_ticker
 from app.services.valuation import analysis
@@ -111,3 +111,9 @@ def import_company(ticker: str):
         raise HTTPException(422, str(error))
     except Exception:
         raise HTTPException(503, "Não foi possível consultar a fonte de dados agora. Tente novamente em instantes.")
+
+
+@app.delete("/api/acoes/{ticker}", status_code=204)
+def delete_company(ticker: str):
+    if not remove_company(ticker):
+        raise HTTPException(404, "Ação não encontrada")

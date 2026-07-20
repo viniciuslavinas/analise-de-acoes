@@ -12,6 +12,7 @@ COMPANIES = [
 ]
 PRICE_FILE = Path(__file__).with_name("prices.json")
 COMPANY_FILE = Path(__file__).with_name("companies.json")
+REMOVED_FILE = Path(__file__).with_name("removed.json")
 
 
 def _load_price_overrides() -> None:
@@ -44,6 +45,22 @@ def add_company(company: Company) -> Company:
     return company
 
 
+def remove_company(ticker: str) -> bool:
+    ticker = ticker.upper()
+    index = next((i for i, item in enumerate(COMPANIES) if item.ticker == ticker), None)
+    if index is None:
+        return False
+    COMPANIES.pop(index)
+    removed = json.loads(REMOVED_FILE.read_text()) if REMOVED_FILE.exists() else []
+    if ticker not in removed:
+        removed.append(ticker)
+        REMOVED_FILE.write_text(json.dumps(removed, indent=2) + "\n")
+    if COMPANY_FILE.exists():
+        custom = [item for item in json.loads(COMPANY_FILE.read_text()) if item["ticker"] != ticker]
+        COMPANY_FILE.write_text(json.dumps(custom, indent=2, ensure_ascii=False) + "\n")
+    return True
+
+
 def set_price(ticker: str, price: float, save: bool = True) -> bool:
     for index, company in enumerate(COMPANIES):
         if company.ticker == ticker.upper():
@@ -69,3 +86,16 @@ def _load_custom_companies() -> None:
 
 
 _load_custom_companies()
+
+
+def _load_removed_companies() -> None:
+    if not REMOVED_FILE.exists():
+        return
+    try:
+        removed = set(json.loads(REMOVED_FILE.read_text()))
+        COMPANIES[:] = [item for item in COMPANIES if item.ticker not in removed]
+    except json.JSONDecodeError:
+        return
+
+
+_load_removed_companies()
