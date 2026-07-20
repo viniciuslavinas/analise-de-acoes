@@ -11,6 +11,7 @@ COMPANIES = [
     Company("BBAS3", "Banco do Brasil ON", "Financeiro", 28.94, 2_850, 240_000, .31, .30, 3_600, 4_500, 1_300, -12_000, 160_000, 37_000, 1.78, .08, .045, .12, .15, 8.5, 1.3, 5.5, 12.0, 1.0),
 ]
 PRICE_FILE = Path(__file__).with_name("prices.json")
+COMPANY_FILE = Path(__file__).with_name("companies.json")
 
 
 def _load_price_overrides() -> None:
@@ -32,6 +33,17 @@ def get_company(ticker: str) -> Company | None:
     return next((item for item in COMPANIES if item.ticker == ticker.upper()), None)
 
 
+def add_company(company: Company) -> Company:
+    if get_company(company.ticker):
+        raise ValueError("Este ticker já está cadastrado.")
+    COMPANIES.append(company)
+    custom = json.loads(COMPANY_FILE.read_text()) if COMPANY_FILE.exists() else []
+    custom.append(company.__dict__)
+    COMPANY_FILE.write_text(json.dumps(custom, indent=2, ensure_ascii=False) + "\n")
+    set_price(company.ticker, company.price)
+    return company
+
+
 def set_price(ticker: str, price: float, save: bool = True) -> bool:
     for index, company in enumerate(COMPANIES):
         if company.ticker == ticker.upper():
@@ -43,3 +55,17 @@ def set_price(ticker: str, price: float, save: bool = True) -> bool:
 
 
 _load_price_overrides()
+
+
+def _load_custom_companies() -> None:
+    if not COMPANY_FILE.exists():
+        return
+    try:
+        for values in json.loads(COMPANY_FILE.read_text()):
+            if not get_company(values["ticker"]):
+                COMPANIES.append(Company(**values))
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return
+
+
+_load_custom_companies()
